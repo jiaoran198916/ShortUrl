@@ -1,5 +1,5 @@
 
-
+import random
 from flask import Flask, jsonify, render_template, request
 from flask_mysql_connector import MySQL
 # from flask.ext.redis import FlaskRedis
@@ -30,7 +30,7 @@ def encode(num):
 def shorten_url():
     long_url = request.json['url']
     # index = int(redis_store.incr('SHORT_CNT'))
-    token = encode(456)
+    token = encode(random.randint(1000000000, 9999999999))  # 随机数
     sql = "INSERT INTO short_url(token, url) VALUES(%s, %s)"
     cur = mysql.new_cursor(dictionary=True)
     cur.execute(sql, (token, long_url))
